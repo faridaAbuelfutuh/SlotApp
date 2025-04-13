@@ -1,5 +1,5 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Slot, Tabs } from 'expo-router';
+import React, { useEffect } from 'react';
 import { Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
@@ -7,11 +7,20 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { SlotDatabase } from '../slot/data/slotDataBase';
+import { SlotProvider } from '../context/slotContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
+  useEffect(() => {
+    const init = async () => {
+        await SlotDatabase.initialize();
+      };
+      init();
+  }, []);
+  
   return (
+    <SlotProvider>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -41,5 +50,6 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+    </SlotProvider>
   );
 }
