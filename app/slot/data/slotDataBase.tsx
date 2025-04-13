@@ -1,6 +1,5 @@
 import * as SQLite from 'expo-sqlite';
 import { Slot } from '../domain/slot';
-import { SlotEntity } from './slotEntity';
 
 const db = SQLite.openDatabaseSync('slot_app.db');
 

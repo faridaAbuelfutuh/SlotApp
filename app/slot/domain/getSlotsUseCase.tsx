@@ -1,4 +1,3 @@
-import { SlotEntity } from "../data/slotEntity";
 import { Slot } from "./slot";
 import { SlotRepository } from "./slotRepository";
 
