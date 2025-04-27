@@ -1,7 +1,7 @@
 import { Slot } from "./slot";
 
 export interface SlotRepository {
-  getSlots(timeZone?: string):  Promise<Slot[]> ;
+  getSlots(timeZone?: string, date?: Date, time?: Date):  Promise<Slot[]> ;
 
   createSlot(slot: Slot): Promise<boolean>;
 

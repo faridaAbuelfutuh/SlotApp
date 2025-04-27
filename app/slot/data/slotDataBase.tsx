@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import { Slot } from '../domain/slot';
+import moment from 'moment-timezone';
 
 const db = SQLite.openDatabaseSync('slot_app.db');
 
@@ -25,10 +26,13 @@ console.log('result', result);
     }
 
     static async getAllSlots(): Promise<Slot[]> {
-        const result = await db.getAllAsync('SELECT * FROM slot');
+        const now = new Date();
+        const result = await db.getAllAsync('SELECT * FROM slot WHERE startDate >= ? ORDER BY startDate, startTime',
+        [moment(now).startOf('day').toISOString()]);
         let slots: Slot[] = [];
         for (const row of result) {
             const typedRow = row as Slot;
+            console.log('typedRow', typedRow);
             slots.push(new Slot( typedRow.startDate, typedRow.endDate, typedRow.startTime, typedRow.endTime, typedRow.timeZone, typedRow.breakDuration, typedRow.slotDuration, typedRow.bufferDuration,typedRow.id!));
         }
         return slots;
@@ -45,4 +49,8 @@ console.log('result', result);
         }
         return slots;
     }
+
+    static async deleteSlots(): Promise<void> {
+        await db.runAsync('DELETE FROM slot');
+      }
 }

@@ -5,7 +5,7 @@ import { SlotRepository } from "./slotRepository";
 export class GetSlotslotUseCase {
   constructor(private slotRepo: SlotRepository) {}
 
-  async execute(timeZone?: string): Promise<Slot[]> {
+  async execute(timeZone?: string, date?: Date, time?: Date): Promise<Slot[]> {
    return await this.slotRepo.getSlots(timeZone);
      
   }

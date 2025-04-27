@@ -15,6 +15,7 @@ export default function TabLayout() {
   useEffect(() => {
     const init = async () => {
         await SlotDatabase.initialize();
+        // await SlotDatabase.deleteSlots();
       };
       init();
   }, []);
